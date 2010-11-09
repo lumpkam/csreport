@@ -11,11 +11,14 @@ import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  * The application's main frame.
@@ -26,6 +29,10 @@ public class CSReportEditorView extends FrameView {
         super(app);
 
         initComponents();
+
+        m_reports = new ArrayList<cEditor>();
+        pnEditor1.setLayout(null);
+        m_reports.add(new cEditor(pnEditor1, pnRule1, pnReport1));
 
         getFrame().setIconImage(new ImageIcon("C:\\dev\\proyectos.nb\\CSReport\\CSReportEditor\\src\\csreporteditor\\resources\\appIcon.png").getImage());
 
@@ -104,13 +111,37 @@ public class CSReportEditorView extends FrameView {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        jSplitPane1 = new javax.swing.JSplitPane();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        splMain = new javax.swing.JSplitPane();
+        tabToolbox = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        tabReport = new javax.swing.JTabbedPane();
+        sclReport1 = new javax.swing.JScrollPane();
+        pnEditor1 = new javax.swing.JPanel();
+        pnRule1 = new javax.swing.JPanel();
+        pnReport1 = new javax.swing.JPanel();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jSeparator14 = new javax.swing.JToolBar.Separator();
+        jButton5 = new javax.swing.JButton();
+        jSeparator15 = new javax.swing.JToolBar.Separator();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jSeparator16 = new javax.swing.JToolBar.Separator();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jSeparator17 = new javax.swing.JToolBar.Separator();
+        jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jSeparator18 = new javax.swing.JToolBar.Separator();
+        jButton13 = new javax.swing.JButton();
+        jSeparator19 = new javax.swing.JToolBar.Separator();
+        jButton14 = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu mnuFile = new javax.swing.JMenu();
         mnuNew = new javax.swing.JMenuItem();
@@ -190,12 +221,11 @@ public class CSReportEditorView extends FrameView {
 
         mainPanel.setName("mainPanel"); // NOI18N
 
-        jSplitPane1.setBorder(null);
-        jSplitPane1.setName("jSplitPane1"); // NOI18N
+        splMain.setBorder(null);
+        splMain.setName("splMain"); // NOI18N
 
-        jTabbedPane2.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        jTabbedPane2.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
-        jTabbedPane2.setName("jTabbedPane2"); // NOI18N
+        tabToolbox.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabToolbox.setName("tabToolbox"); // NOI18N
 
         jPanel2.setName("jPanel2"); // NOI18N
 
@@ -207,11 +237,11 @@ public class CSReportEditorView extends FrameView {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 312, Short.MAX_VALUE)
+            .addGap(0, 347, Short.MAX_VALUE)
         );
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(csreporteditor.CSReportEditorApp.class).getContext().getResourceMap(CSReportEditorView.class);
-        jTabbedPane2.addTab(resourceMap.getString("jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
+        tabToolbox.addTab(resourceMap.getString("jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
 
         jPanel3.setName("jPanel3"); // NOI18N
 
@@ -223,10 +253,10 @@ public class CSReportEditorView extends FrameView {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 312, Short.MAX_VALUE)
+            .addGap(0, 347, Short.MAX_VALUE)
         );
 
-        jTabbedPane2.addTab(resourceMap.getString("jPanel3.TabConstraints.tabTitle"), jPanel3); // NOI18N
+        tabToolbox.addTab(resourceMap.getString("jPanel3.TabConstraints.tabTitle"), jPanel3); // NOI18N
 
         jPanel4.setName("jPanel4"); // NOI18N
 
@@ -238,31 +268,224 @@ public class CSReportEditorView extends FrameView {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 312, Short.MAX_VALUE)
+            .addGap(0, 347, Short.MAX_VALUE)
         );
 
-        jTabbedPane2.addTab(resourceMap.getString("jPanel4.TabConstraints.tabTitle"), jPanel4); // NOI18N
+        tabToolbox.addTab(resourceMap.getString("jPanel4.TabConstraints.tabTitle"), jPanel4); // NOI18N
 
-        jSplitPane1.setLeftComponent(jTabbedPane2);
+        splMain.setLeftComponent(tabToolbox);
 
-        jTabbedPane1.setMinimumSize(new java.awt.Dimension(250, 128));
-        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
-        jTabbedPane1.setPreferredSize(new java.awt.Dimension(250, 100));
+        tabReport.setMinimumSize(new java.awt.Dimension(250, 128));
+        tabReport.setName("tabReport"); // NOI18N
+        tabReport.setPreferredSize(new java.awt.Dimension(250, 100));
 
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
-        jTabbedPane1.addTab(resourceMap.getString("jScrollPane1.TabConstraints.tabTitle"), jScrollPane1); // NOI18N
+        sclReport1.setName("sclReport1"); // NOI18N
 
-        jSplitPane1.setRightComponent(jTabbedPane1);
+        pnEditor1.setBackground(resourceMap.getColor("pnEditor1.background")); // NOI18N
+        pnEditor1.setName("pnEditor1"); // NOI18N
+
+        pnRule1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        pnRule1.setName("pnRule1"); // NOI18N
+
+        javax.swing.GroupLayout pnRule1Layout = new javax.swing.GroupLayout(pnRule1);
+        pnRule1.setLayout(pnRule1Layout);
+        pnRule1Layout.setHorizontalGroup(
+            pnRule1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        pnRule1Layout.setVerticalGroup(
+            pnRule1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        pnReport1.setBackground(resourceMap.getColor("pnReport1.background")); // NOI18N
+        pnReport1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        pnReport1.setName("pnReport1"); // NOI18N
+
+        javax.swing.GroupLayout pnReport1Layout = new javax.swing.GroupLayout(pnReport1);
+        pnReport1.setLayout(pnReport1Layout);
+        pnReport1Layout.setHorizontalGroup(
+            pnReport1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        pnReport1Layout.setVerticalGroup(
+            pnReport1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout pnEditor1Layout = new javax.swing.GroupLayout(pnEditor1);
+        pnEditor1.setLayout(pnEditor1Layout);
+        pnEditor1Layout.setHorizontalGroup(
+            pnEditor1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnEditor1Layout.createSequentialGroup()
+                .addComponent(pnRule1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnReport1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(293, Short.MAX_VALUE))
+        );
+        pnEditor1Layout.setVerticalGroup(
+            pnEditor1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnEditor1Layout.createSequentialGroup()
+                .addGroup(pnEditor1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnReport1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnRule1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(276, Short.MAX_VALUE))
+        );
+
+        sclReport1.setViewportView(pnEditor1);
+
+        tabReport.addTab(resourceMap.getString("sclReport1.TabConstraints.tabTitle"), sclReport1); // NOI18N
+
+        splMain.setRightComponent(tabReport);
+
+        jToolBar1.setRollover(true);
+        jToolBar1.setName("jToolBar1"); // NOI18N
+
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(csreporteditor.CSReportEditorApp.class).getContext().getActionMap(CSReportEditorView.class, this);
+        jButton2.setAction(actionMap.get("newReport")); // NOI18N
+        jButton2.setIcon(resourceMap.getIcon("jButton2.icon")); // NOI18N
+        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setName("jButton2"); // NOI18N
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton2);
+
+        jButton3.setIcon(resourceMap.getIcon("jButton3.icon")); // NOI18N
+        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setName("jButton3"); // NOI18N
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton3);
+
+        jButton1.setIcon(resourceMap.getIcon("jButton1.icon")); // NOI18N
+        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
+
+        jButton4.setIcon(resourceMap.getIcon("jButton4.icon")); // NOI18N
+        jButton4.setText(resourceMap.getString("jButton4.text")); // NOI18N
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setName("jButton4"); // NOI18N
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton4);
+
+        jSeparator14.setName("jSeparator14"); // NOI18N
+        jToolBar1.add(jSeparator14);
+
+        jButton5.setIcon(resourceMap.getIcon("jButton5.icon")); // NOI18N
+        jButton5.setText(resourceMap.getString("jButton5.text")); // NOI18N
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setName("jButton5"); // NOI18N
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton5);
+
+        jSeparator15.setName("jSeparator15"); // NOI18N
+        jToolBar1.add(jSeparator15);
+
+        jButton6.setIcon(resourceMap.getIcon("jButton6.icon")); // NOI18N
+        jButton6.setText(resourceMap.getString("jButton6.text")); // NOI18N
+        jButton6.setFocusable(false);
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.setName("jButton6"); // NOI18N
+        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton6);
+
+        jButton7.setIcon(resourceMap.getIcon("jButton7.icon")); // NOI18N
+        jButton7.setText(resourceMap.getString("jButton7.text")); // NOI18N
+        jButton7.setFocusable(false);
+        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton7.setName("jButton7"); // NOI18N
+        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton7);
+
+        jSeparator16.setName("jSeparator16"); // NOI18N
+        jToolBar1.add(jSeparator16);
+
+        jButton8.setIcon(resourceMap.getIcon("jButton8.icon")); // NOI18N
+        jButton8.setText(resourceMap.getString("jButton8.text")); // NOI18N
+        jButton8.setFocusable(false);
+        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton8.setName("jButton8"); // NOI18N
+        jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton8);
+
+        jButton9.setIcon(resourceMap.getIcon("jButton9.icon")); // NOI18N
+        jButton9.setText(resourceMap.getString("jButton9.text")); // NOI18N
+        jButton9.setFocusable(false);
+        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton9.setName("jButton9"); // NOI18N
+        jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton9);
+
+        jSeparator17.setName("jSeparator17"); // NOI18N
+        jToolBar1.add(jSeparator17);
+
+        jButton10.setIcon(resourceMap.getIcon("jButton10.icon")); // NOI18N
+        jButton10.setText(resourceMap.getString("jButton10.text")); // NOI18N
+        jButton10.setFocusable(false);
+        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton10.setName("jButton10"); // NOI18N
+        jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton10);
+
+        jButton11.setIcon(resourceMap.getIcon("jButton11.icon")); // NOI18N
+        jButton11.setText(resourceMap.getString("jButton11.text")); // NOI18N
+        jButton11.setFocusable(false);
+        jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton11.setName("jButton11"); // NOI18N
+        jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton11);
+
+        jButton12.setIcon(resourceMap.getIcon("jButton12.icon")); // NOI18N
+        jButton12.setText(resourceMap.getString("jButton12.text")); // NOI18N
+        jButton12.setFocusable(false);
+        jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton12.setName("jButton12"); // NOI18N
+        jButton12.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton12);
+
+        jSeparator18.setName("jSeparator18"); // NOI18N
+        jToolBar1.add(jSeparator18);
+
+        jButton13.setIcon(resourceMap.getIcon("jButton13.icon")); // NOI18N
+        jButton13.setText(resourceMap.getString("jButton13.text")); // NOI18N
+        jButton13.setFocusable(false);
+        jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton13.setName("jButton13"); // NOI18N
+        jButton13.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton13);
+
+        jSeparator19.setName("jSeparator19"); // NOI18N
+        jToolBar1.add(jSeparator19);
+
+        jButton14.setIcon(resourceMap.getIcon("jButton14.icon")); // NOI18N
+        jButton14.setText(resourceMap.getString("jButton14.text")); // NOI18N
+        jButton14.setFocusable(false);
+        jButton14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton14.setName("jButton14"); // NOI18N
+        jButton14.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton14);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
+            .addComponent(splMain, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(splMain, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
         );
 
         menuBar.setName("menuBar"); // NOI18N
@@ -271,8 +494,7 @@ public class CSReportEditorView extends FrameView {
         mnuFile.setText(resourceMap.getString("mnuFile.text")); // NOI18N
         mnuFile.setName("mnuFile"); // NOI18N
 
-        mnuNew.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        mnuNew.setMnemonic('N');
+        mnuNew.setAction(actionMap.get("newReport")); // NOI18N
         mnuNew.setText(resourceMap.getString("mnuNew.text")); // NOI18N
         mnuNew.setName("mnuNew"); // NOI18N
         mnuFile.add(mnuNew);
@@ -326,7 +548,6 @@ public class CSReportEditorView extends FrameView {
         jSeparator4.setName("jSeparator4"); // NOI18N
         mnuFile.add(jSeparator4);
 
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(csreporteditor.CSReportEditorApp.class).getContext().getActionMap(CSReportEditorView.class, this);
         mnuExit.setAction(actionMap.get("quit")); // NOI18N
         mnuExit.setName("mnuExit"); // NOI18N
         mnuFile.add(mnuExit);
@@ -552,6 +773,7 @@ public class CSReportEditorView extends FrameView {
         jMenu2.setText(resourceMap.getString("jMenu2.text")); // NOI18N
         jMenu2.setName("jMenu2"); // NOI18N
 
+        jMenuItem9.setAction(actionMap.get("showPreferences")); // NOI18N
         jMenuItem9.setText(resourceMap.getString("jMenuItem9.text")); // NOI18N
         jMenuItem9.setName("jMenuItem9"); // NOI18N
         jMenu2.add(jMenuItem9);
@@ -609,7 +831,42 @@ public class CSReportEditorView extends FrameView {
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
+    @Action
+    public void newReport() {
+        JPanel rule = new JPanel();
+        JPanel report = new JPanel();
+        JPanel editor = new JPanel();
+        JScrollPane scroll = new JScrollPane();
+        editor.setLayout(null);
+        editor.add(rule);
+        editor.add(report);
+        scroll.setViewportView(editor);
+        ResourceMap resourceMap = getResourceMap();
+        tabReport.addTab(resourceMap.getString("sclReport1.TabConstraints.tabTitle"), scroll);
+        m_reports.add(new cEditor(editor, rule, report));
+    }
+
+    @Action
+    public void showPreferences() {
+        fToolsOptions op = new fToolsOptions(this.getFrame(), true);
+        CSReportEditorApp.getApplication().show(op);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
@@ -624,12 +881,17 @@ public class CSReportEditorView extends FrameView {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JPopupMenu.Separator jSeparator12;
     private javax.swing.JPopupMenu.Separator jSeparator13;
+    private javax.swing.JToolBar.Separator jSeparator14;
+    private javax.swing.JToolBar.Separator jSeparator15;
+    private javax.swing.JToolBar.Separator jSeparator16;
+    private javax.swing.JToolBar.Separator jSeparator17;
+    private javax.swing.JToolBar.Separator jSeparator18;
+    private javax.swing.JToolBar.Separator jSeparator19;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -638,9 +900,7 @@ public class CSReportEditorView extends FrameView {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
-    private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem mnuAddChart;
@@ -685,10 +945,17 @@ public class CSReportEditorView extends FrameView {
     private javax.swing.JMenuItem mnuViewGridLinesVertial;
     private javax.swing.JMenuItem mnuViewGridPoints;
     private javax.swing.JMenuItem mnuViewToolBox;
+    private javax.swing.JPanel pnEditor1;
+    private javax.swing.JPanel pnReport1;
+    private javax.swing.JPanel pnRule1;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JScrollPane sclReport1;
+    private javax.swing.JSplitPane splMain;
     private javax.swing.JLabel statusAnimationLabel;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
+    private javax.swing.JTabbedPane tabReport;
+    private javax.swing.JTabbedPane tabToolbox;
     // End of variables declaration//GEN-END:variables
 
     private final Timer messageTimer;
@@ -696,6 +963,8 @@ public class CSReportEditorView extends FrameView {
     private final Icon idleIcon;
     private final Icon[] busyIcons = new Icon[15];
     private int busyIconIndex = 0;
+
+    private ArrayList<cEditor> m_reports = null;
 
     private JDialog aboutBox;
 }
