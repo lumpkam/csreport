@@ -34,10 +34,10 @@ public class CSReportEditorView extends FrameView {
         pnEditor1.setLayout(null);
         m_reports.add(new cEditor(pnEditor1, pnRule1, pnReport1));
 
-        getFrame().setIconImage(new ImageIcon("C:\\dev\\proyectos.nb\\CSReport\\CSReportEditor\\src\\csreporteditor\\resources\\appIcon.png").getImage());
+        ResourceMap resourceMap = getResourceMap();
+        getFrame().setIconImage(resourceMap.getImageIcon("app.icon").getImage());
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
-        ResourceMap resourceMap = getResourceMap();
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
         messageTimer = new Timer(messageTimeout, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
