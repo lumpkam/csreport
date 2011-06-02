@@ -10,7 +10,6 @@
  */
 package cskernelclient;
 
-import java.awt.Dimension;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.jdesktop.application.Action;
@@ -26,6 +25,7 @@ public class fErrores extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setSize(535, 130);
+        this.setLocationRelativeTo( null );
     }
 
     /** This method is called from within the constructor to
@@ -123,6 +123,7 @@ public class fErrores extends javax.swing.JDialog {
 
     @Action
     public void cmdOkClick() {
+        this.setVisible(false);
     }
 
     @Action
