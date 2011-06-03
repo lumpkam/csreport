@@ -24,6 +24,7 @@ public class fErrores extends javax.swing.JDialog {
     public fErrores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setLayout(null);
         this.setSize(535, 130);
         this.setLocationRelativeTo( null );
     }
@@ -39,46 +40,73 @@ public class fErrores extends javax.swing.JDialog {
 
         cmdOk = new javax.swing.JButton();
         cmdDetails = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lbImage = new javax.swing.JLabel();
+        lbDescrip = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txDetails = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(null);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(fErrores.class, this);
         cmdOk.setAction(actionMap.get("cmdOkClick")); // NOI18N
         cmdOk.setText("Aceptar");
         cmdOk.setName("cmdOk"); // NOI18N
-        getContentPane().add(cmdOk);
-        cmdOk.setBounds(433, 27, 71, 23);
 
         cmdDetails.setAction(actionMap.get("cmdDetailsClick")); // NOI18N
         cmdDetails.setText("Detalles");
         cmdDetails.setName("cmdDetails"); // NOI18N
-        getContentPane().add(cmdDetails);
-        cmdDetails.setBounds(433, 56, 71, 23);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cskernelclient/resources/Warning-icon.png"))); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(10, 11, 48, 48);
+        lbImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cskernelclient/resources/Warning-icon.png"))); // NOI18N
+        lbImage.setName("lbImage"); // NOI18N
 
-        jLabel2.setText("Ha ocurrido un error en el sistema.");
-        jLabel2.setName("jLabel2"); // NOI18N
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(76, 31, 166, 14);
+        lbDescrip.setText("Ha ocurrido un error en el sistema.");
+        lbDescrip.setName("lbDescrip"); // NOI18N
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setName("jTextArea1"); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
+        txDetails.setColumns(20);
+        txDetails.setRows(5);
+        txDetails.setName("txDetails"); // NOI18N
+        jScrollPane1.setViewportView(txDetails);
 
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(10, 100, 494, 96);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(lbImage)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbDescrip)
+                        .addGap(181, 181, 181)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cmdOk, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmdDetails, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbImage)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(lbDescrip))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(cmdOk)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmdDetails)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -136,14 +164,42 @@ public class fErrores extends javax.swing.JDialog {
             cmdDetails.setText("Detalles");
             this.setSize(535, 130);
         }
-        
     }
+    
+    public void addDetail(String text) {
+        txDetails.append(text + "\\n");
+    }
+    
+    public void setCaption(String caption) {
+        this.setTitle(caption);
+    }
+    
+    public void setWarning() {
+        // esta hecho por diseño
+    }
+    
+    public void setFatal() {
+        lbImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cskernelclient/resources/Status-dialog-error-icon.png"))); // NOI18N
+    }
+    
+    public void setInformation() {
+        lbImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cskernelclient/resources/Status-dialog-information-icon.png"))); // NOI18N
+    }
+    
+    public void setDescrip(String value) {
+        lbDescrip.setText(value);
+    }
+    
+    public String getDetail() {
+        return txDetails.getText();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cmdDetails;
     private javax.swing.JButton cmdOk;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lbDescrip;
+    private javax.swing.JLabel lbImage;
+    private javax.swing.JTextArea txDetails;
     // End of variables declaration//GEN-END:variables
 }
