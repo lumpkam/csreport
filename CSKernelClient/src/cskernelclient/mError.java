@@ -4,6 +4,9 @@
  */
 package cskernelclient;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  *
  * @author jalvarez
@@ -33,23 +36,38 @@ public class mError {
     // estructuras
     // variables privadas
     // Properties publicas
+    public static String gTitle;
+    
     public static String gLastErrDescription = "";
     public static int gLastErrorNumber = 0;
     public static boolean gbSilent = false;
     public static String gLastErrFunction = "";
     public static String gLastErrModule = "";
     public static String gLastErrInfoAdd = "";
+    public static String gStackTrace = "";
     public static int gLastErrLine = 0;
     // Properties privadas
     // Funciones publicas
 
-    public static void mngError_(Exception errObj, String nameFunction, String module, String infoAdd, String title, csErrorLevel level, csErrorType varType, Object connectionObj) { // TODO: Use of ByRef founded
+    public static void mngError_(
+            Exception errObj, 
+            String nameFunction, 
+            String module, 
+            String infoAdd, 
+            String title, 
+            int level, 
+            int varType, 
+            Object connectionObj) { // TODO: Use of ByRef founded
 
         gLastErrFunction = nameFunction;
         gLastErrModule = module;
         gLastErrInfoAdd = infoAdd;
         gLastErrLine = 0;
         gLastErrorNumber = 0;
+        
+        StringWriter errors = new StringWriter();
+        errObj.printStackTrace(new PrintWriter(errors));
+        gStackTrace = errors.toString();
 
         fErrores f = null;
         Object errorAdo = null;
@@ -85,10 +103,10 @@ public class mError {
 
             if (!gbSilent) {
 
-                // CREO UN FORMULARIO DE ERRORES
+                // Creo un formulario de errores
                 f = new fErrores(new javax.swing.JFrame(), true);
 
-                // AGREGO INFORMACION DEL ERROR A LA List
+                // Agrego informacion del error a la lista
                 f.addDetail("Función: " + nameFunction.replace("\\n", "\\n"));
                 f.addDetail("Modulo: " + module);
                 f.addDetail("Descripción: " + strErr.replace("\\n", "\\n"));
@@ -97,77 +115,40 @@ public class mError {
                 f.addDetail("");
                 f.addDetail("Source: " + errSource);
                 f.addDetail("");
+                f.addDetail("Stack:");
+                f.addDetail(gStackTrace);
 
-                if (title.isEmpty()) { title =  App.title; }
+                if (title.isEmpty()) { title = gTitle; }
 
                 f.setCaption(title);
 
-                // ESTABLEZCO EL DIBUJITO DEL FORMULARIO
+                // Establezco el dibujito del formulario
                 switch (level) {
-                    case  csErrorWarning:
+                    case csErrorLevel.CSERRORWARNING:
                         f.setWarning();
                         break;
-                    case  csErrorFatal:
+                    case csErrorLevel.CSERRORFATAL:
                         f.setFatal();
                     //'csErrorInformation
                         break;
-                    case  Else:
+                    default:
                         f.setInformation();
                         break;
                 }
 
-                // ESTABLEZCO EL CONTENIDO DE LA ETIQUETA DETALLE
+                // Establezco el contenido de la etiqueta detalle
                 f.setDescrip("Ha ocurrido un error en la aplicación");
-
-                //      ' AGREGO CADA ERROR ADO A LA LISTA DE DETALLE
-                //      If VarType = csErrorAdo Then
-                //          f.AddDetail "Errores ADO"
-                //          If IsEmpty(ConnectionObj) Then
-                //              f.AddDetail "Error interno de sintaxis"
-                //              f.AddDetail "No se ha pasado un objeto conexión"
-                //          Else
-                //              For Each errorAdo In ConnectionObj.Errors
-                //                  f.AddDetail "Número: " & IIf(errorAdo.Number < 0, errorAdo.Number - vbObjectError, errorAdo.Number)
-                //                  f.AddDetail "Descripción: " & errorAdo.Description
-                //                  f.AddDetail "Source: " & errorAdo.Source
-                //                  f.AddDetail "Estado Sql: " & errorAdo.SQLState
-                //                  f.AddDetail "Archivo de ayuda: " & errorAdo.HelpFile
-                //                  f.AddDetail "Contexto de ayuda: " & errorAdo.HelpContext
-                //                  f.AddDetail "Error nativo: " & errorAdo.NativeError
-                //                  f.AddDetail ""
-                //              Next
-                //          End If
-                //      End If
-
                 gLastErrDescription = f.getDetail();
-
-                f.Show(vbModal);
+                f.setVisible(true);
 
             } 
             else {
 
                 String errDescription = "";
-
-                errDescription = errObj.Description + "\\n";
-
-                //      If VarType = csErrorAdo Then
-                //
-                //        If Not IsEmpty(ConnectionObj) Then
-                //          For Each errorAdo In ConnectionObj.Errors
-                //            errDescription = errDescription & "Número: " & IIf(errorAdo.Number < 0, errorAdo.Number - vbObjectError, errorAdo.Number) & vbCrLf _
-                //                                            & "Descripción: " & errorAdo.Description & vbCrLf _
-                //                                            & "Source: " & errorAdo.Source & vbCrLf _
-                //                                            & "Estado Sql: " & errorAdo.SQLState & vbCrLf _
-                //                                            & "Archivo de ayuda: " & errorAdo.HelpFile & vbCrLf _
-                //                                            & "Contexto de ayuda: " & errorAdo.HelpContext & vbCrLf _
-                //                                            & "Error nativo: " & errorAdo.NativeError & vbCrLf & vbCrLf
-                //          Next
-                //        End If
-                //      End If
-
+                errDescription = errObj.getMessage() + "\\n";
                 gLastErrDescription = strErr + "\\n" + errDescription;
-            }
 
+            }
         }
     }
     // Funciones privadas
