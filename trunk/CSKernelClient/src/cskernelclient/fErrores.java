@@ -25,8 +25,12 @@ public class fErrores extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLayout(null);
-        this.setSize(535, 130);
-        this.setLocationRelativeTo( null );
+        this.setSize(535, 125);
+        this.setLocationRelativeTo(null);
+        this.cmdOk.setText("Aceptar");
+        this.cmdDetails.setText("Detalles");
+        this.cmdDetails.setLocation(535-this.cmdDetails.getSize().width-10, this.cmdDetails.getLocation().y);
+        this.cmdOk.setLocation(this.cmdDetails.getLocation().x, this.cmdOk.getLocation().y);
     }
 
     /** This method is called from within the constructor to
@@ -49,11 +53,9 @@ public class fErrores extends javax.swing.JDialog {
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(fErrores.class, this);
         cmdOk.setAction(actionMap.get("cmdOkClick")); // NOI18N
-        cmdOk.setText("Aceptar");
         cmdOk.setName("cmdOk"); // NOI18N
 
         cmdDetails.setAction(actionMap.get("cmdDetailsClick")); // NOI18N
-        cmdDetails.setText("Detalles");
         cmdDetails.setName("cmdDetails"); // NOI18N
 
         lbImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cskernelclient/resources/Warning-icon.png"))); // NOI18N
@@ -103,9 +105,9 @@ public class fErrores extends javax.swing.JDialog {
                         .addComponent(cmdOk)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmdDetails)))
-                .addGap(18, 18, 18)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -156,18 +158,18 @@ public class fErrores extends javax.swing.JDialog {
 
     @Action
     public void cmdDetailsClick() {
-        if (cmdDetails.getText().equals("Detalles")) {
-            cmdDetails.setText("Ocultar");
+        if (this.cmdDetails.getText().equals("Detalles")) {
+            this.cmdDetails.setText("Ocultar");
             this.setSize(535, 250);
         }
         else {
-            cmdDetails.setText("Detalles");
-            this.setSize(535, 130);
+            this.cmdDetails.setText("Detalles");
+            this.setSize(535, 125);
         }
     }
     
     public void addDetail(String text) {
-        txDetails.append(text + "\\n");
+        this.txDetails.append(text + "\\n");
     }
     
     public void setCaption(String caption) {
