@@ -29,7 +29,7 @@ public class fErrores extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         this.cmdOk.setText("Aceptar");
         this.cmdDetails.setText("Detalles");
-        this.cmdDetails.setLocation(535-this.cmdDetails.getSize().width-10, this.cmdDetails.getLocation().y);
+        this.cmdDetails.setLocation(535-this.cmdDetails.getSize().width-30, this.cmdDetails.getLocation().y);
         this.cmdOk.setLocation(this.cmdDetails.getLocation().x, this.cmdOk.getLocation().y);
     }
 
@@ -53,9 +53,11 @@ public class fErrores extends javax.swing.JDialog {
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance().getContext().getActionMap(fErrores.class, this);
         cmdOk.setAction(actionMap.get("cmdOkClick")); // NOI18N
+        cmdOk.setText("Aceptar");
         cmdOk.setName("cmdOk"); // NOI18N
 
         cmdDetails.setAction(actionMap.get("cmdDetailsClick")); // NOI18N
+        cmdDetails.setText("Detalles");
         cmdDetails.setName("cmdDetails"); // NOI18N
 
         lbImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cskernelclient/resources/Warning-icon.png"))); // NOI18N
@@ -89,7 +91,7 @@ public class fErrores extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

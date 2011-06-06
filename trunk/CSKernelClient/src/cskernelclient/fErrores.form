@@ -40,7 +40,7 @@
                       <Component id="jScrollPane1" min="-2" pref="494" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="14" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -74,6 +74,7 @@
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
           <action class="cskernelclient.fErrores" id="cmdOkClick" methodName="cmdOkClick"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Aceptar"/>
         <Property name="name" type="java.lang.String" value="cmdOk" noResource="true"/>
       </Properties>
     </Component>
@@ -82,6 +83,7 @@
         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
           <action class="cskernelclient.fErrores" id="cmdDetailsClick" methodName="cmdDetailsClick"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Detalles"/>
         <Property name="name" type="java.lang.String" value="cmdDetails" noResource="true"/>
       </Properties>
     </Component>

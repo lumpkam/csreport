@@ -60,6 +60,8 @@ public class mUtil {
     private static final String C_CRLF = "@;";
     private static final String C_CRLF2 = ";";
 
+    private static final String C_ERRORSTR = "GetInfoString_: Se intento obtener un valor de una cadena invalida, la cadena esta corrupta, falta el signo ";
+    
     // constantes
     // estructuras
     static class Record {
@@ -120,68 +122,143 @@ public class mUtil {
         else
             return record.getId();
     }
+    private static DefaultListModel getModel(Object list) {
+        DefaultListModel model = null;
+        
+        if (list instanceof JList) {
+            JList jlist = (JList)list;
+            model = (DefaultListModel)jlist.getModel();
+        }
+        else if (list instanceof JComboBox) {
+            JComboBox combo = (JComboBox)list;
+            model = (DefaultListModel)combo.getModel() ;
+        }
+        return model;
+    }
     public static int listItemData_(Object list, int index) {
-        int _rtn = 0;
-        if (list.ListCount - 1 < index) { return _rtn; }
-        if (index == -1) {
-            _rtn = listID_(list);
-        } 
+        DefaultListModel model = getModel(list);
+        if (model != null) {
+            if (model.size() - 1 < index) 
+            { 
+                return 0; 
+            }
+            else if (index == -1) {
+                return listID_(list);
+            } 
+            else {
+                Record record = (Record)model.get(index);
+                if (record == null) 
+                    return 0;
+                else
+                    return record.getId();
+            }
+        }
         else {
-            _rtn = list.ItemData(index);
+            return 0;
         }
-        return _rtn;
     }
-    public static void listSetListIndex_(Object list, int idx) { // TODO: Use of ByRef founded
-        if (list.ListCount < 1) { return; }
-        if (list.ListCount > idx) { list.ListIndex = idx; }
+    public static void listSetListIndex_(Object list, int index) {
+        DefaultListModel model = getModel(list);
+        if (model != null) {
+            if (model.size() >= 1) {
+                if (model.size() > index) { 
+                    if (list instanceof JList) {
+                        JList jlist = (JList)list;
+                        jlist.setSelectedIndex(index);
+                    }
+                    else if (list instanceof JComboBox) {
+                        JComboBox combo = (JComboBox)list;
+                        combo.setSelectedIndex(index);
+                    }                    
+                }
+            }
+        }
     }
-    public static void listSetListIndexForId_(Object list, int id) { // TODO: Use of ByRef founded
+    public static void listSetListIndexForId_(Object list, int id) {
+        DefaultListModel model = getModel(list);
         int i = 0;
-        for (i = 0; i <= list.ListCount - 1; i++) {
-            if (list.ItemData(i) == id) {
-                list.ListIndex = i;
+        for (i = 0; i <= model.size() - 1; i++) {
+            if (listItemData_(list, i) == id) {
+                listSetListIndex_(list, i);
                 break;
             }
         }
     }
-    public static void listSetListIndexForText_(Object list, String text) { // TODO: Use of ByRef founded
+    private static Record getRecordFromList(Object list, int index) {
+        if (list instanceof JList) {
+            JList jlist = (JList)list;
+            DefaultListModel model = (DefaultListModel)jlist.getModel();
+            return (Record)model.get(index);
+        }
+        else if (list instanceof JComboBox) {
+            JComboBox combo = (JComboBox)list;
+            return (Record)combo.getItemAt(index);
+        }
+        else {
+            return null;
+        }
+    }
+    private static int getSelectedIndex(Object list) {
+        if (list instanceof JList) {
+            JList jlist = (JList)list;
+            return jlist.getSelectedIndex();
+        }
+        else if (list instanceof JComboBox) {
+            JComboBox combo = (JComboBox)list;
+            return combo.getSelectedIndex();
+        }
+        else {
+            return -1;
+        }
+    }
+    public static void listSetListIndexForText_(Object list, String text) { 
+        DefaultListModel model = getModel(list);
         int i = 0;
-        for (i = 0; i <= list.ListCount - 1; i++) {
-            if (text.equals(list.list(i))) {
-                list.ListIndex = i;
+        for (i = 0; i <= model.size() - 1; i++) {
+            if (text.equals(getRecordFromList(list, i).value)) {
+                listSetListIndex_(list, i);
                 break;
             }
         }
     }
-    public static void listChangeTextForSelected_(Object list, String value) { // TODO: Use of ByRef founded
-        listChangeText_(list, list.ListIndex, value);
+    public static void listChangeTextForSelected_(Object list, String value) { 
+        listChangeText_(list, getSelectedIndex(list), value);
     }
-    public static void listChangeText_(Object list, int idx, String value) { // TODO: Use of ByRef founded
-        int itemD = 0;
-        if (idx > list.ListCount || idx < 0) { return; }
-        itemD = list.ItemData(idx);
-        list.RemoveItem(idx);
-        listAdd_(list, value, itemD);
+    private static void removeItemFromList(Object list, int index) {
+        if (list instanceof JList) {
+            JList jlist = (JList)list;
+            jlist.remove(index);
+        }
+        else if (list instanceof JComboBox) {
+            JComboBox combo = (JComboBox)list;
+            combo.remove(index);
+        }        
     }
-    public static int listGetIndexFromItemData_(Object list, int valueItemData) {
-        int _rtn = 0;
-        int i = 0;
-
-        for (i = 0; i <= list.ListCount - 1; i++) {
-
-            if (list.ItemData(i) == valueItemData) {
-                _rtn = i;
-                return _rtn;
+    private static void addItemToList(Object list, Record record) {
+        listAdd_(list, record.value, record.id);
+    }
+    public static void listChangeText_(Object list, int index, String value) { 
+        DefaultListModel model = getModel(list);
+        if (!(index > model.size() || index < 0)) {
+            Record record = getRecordFromList(list, index);
+            record.value = value;
+            removeItemFromList(list, index);
+            addItemToList(list, record);
+        }
+    }
+    public static int listGetIndexFromItemData_(Object list, int itemData) {
+        DefaultListModel model = getModel(list);
+        for (int i = 0; i <= model.size() - 1; i++) {
+            if (listItemData_(list, i) == itemData) {
+                return i;
             }
         }
-
-        _rtn = -1;
-        return _rtn;
+        return -2;
     }
     //
     //-- InfoString
     //
-    public static String setInfoString_(String fuente, String key, String value) {
+    public static String setInfoString_(String fuente, String key, String value) throws Exception {
         String _rtn = "";
         int i = 0;
         int j = 0;
@@ -190,7 +267,9 @@ public class mUtil {
         key = "#" + key;
         i = fuente.toLowerCase().indexOf(key.toLowerCase(), 1);
         // la Key no puede estar repetida
-        if (fuente.toLowerCase().indexOf(key.toLowerCase(), i + 1) != 0) { VBA.ex.Raise(csErrorSetInfoString, "CSOAPI", "SetInfoString_: Se intento Save un Value de Password en una cadena invalida, la Password esta repetida."); }
+        if (fuente.toLowerCase().indexOf(key.toLowerCase(), i + 1) != 0) { 
+            throw new Exception("CSKernelClient: SetInfoString_: Se intento asignar un valor de clave en una cadena invalida, la clave esta repetida."); 
+        }
 
         // si aun no existe la agrego al final
         if (i == 0) {
@@ -199,17 +278,21 @@ public class mUtil {
         else {
 
             j = fuente.toLowerCase().indexOf(";".toLowerCase(), i);
-            if (j == 0) { VBA.ex.Raise(csErrorSetInfoString, "CSOAPI", "SetInfoString_: Se intento Save un Value de Password en una cadena invalida, la cadena esta corrupta, falta el signo ;."); }
+            if (j == 0) { 
+                throw new Exception("CSKernelClient: SetInfoString_: Se intento asignar un valor de clave en una cadena invalida, la cadena esta corrupta, falta el signo ;."); 
+            }
 
             k = fuente.substring(i, j).toLowerCase().indexOf("=".toLowerCase(), 1);
-            if (k == 0) { VBA.ex.Raise(csErrorSetInfoString, "CSOAPI", "SetInfoString_: Se intento Save un Value de Password en una cadena invalida, la cadena esta corrupta, falta el signo =."); }
+            if (k == 0) { 
+                throw new Exception("CSKernelClient: SetInfoString_: Se intento Save un Value de Password en una cadena invalida, la cadena esta corrupta, falta el signo =."); 
+            }
             k = k + i - 1;
             _rtn = fuente.substring(1, k) + value + fuente.substring(j);
         }
         return _rtn;
     }
 
-    public static String getInfoString_(String fuente, String key, String default) {
+    public static String getInfoString_(String fuente, String key, String defaultValue) throws Exception {
         String _rtn = "";
         int i = 0;
         int j = 0;
@@ -218,23 +301,25 @@ public class mUtil {
         key = "#" + key;
 
         i = fuente.toLowerCase().indexOf(key.toLowerCase(), 1);
-        // la Key no puede estar repetida
-        if (fuente.toLowerCase().indexOf(key.toLowerCase(), i + 1) != 0) { VBA.ex.Raise(csErrorSetInfoString, "CSOAPI", "GetInfoString_: Se intento obtener un Value de una cadena invalida, la Password esta repetida."); }
+        // la clave no puede estar repetida
+        if (fuente.toLowerCase().indexOf(key.toLowerCase(), i + 1) != 0) { 
+            throw new Exception("CSKernelClient: GetInfoString_: Se intento obtener un Value de una cadena invalida, la Password esta repetida."); 
+        }
 
-        // si la Key no existe devuelvo el default
+        // si la clave no existe devuelvo el default
         if (i == 0) {
-            _rtn = default;
+            _rtn = defaultValue;
         } 
         else {
 
-            "GetInfoString_: Se intento obtener un valor de una cadena invalida, la cadena esta corrupta, falta el signo "
-.equals(Const c_errorstr);
-
             j = fuente.toLowerCase().indexOf(";".toLowerCase(), i);
-            if (j == 0) { VBA.ex.Raise(csErrorSetInfoString, "CSOAPI", c_errorstr + ";."); }
+            if (j == 0) { 
+                throw new Exception("CSKernelClient: " + C_ERRORSTR + ";."); }
 
             k = fuente.substring(i, j).toLowerCase().indexOf("=".toLowerCase(), 1);
-            if (k == 0) { VBA.ex.Raise(csErrorSetInfoString, "CSOAPI", c_errorstr + "=."); }
+            if (k == 0) { 
+                throw new Exception("CSKernelClient: " + C_ERRORSTR + "=."); 
+            }
             k = k + i - 1;
             _rtn = fuente.substring(k + 1, j - k - 1);
         }
@@ -244,7 +329,7 @@ public class mUtil {
     //
     //-- Trees
     //
-    public static void setNodeForId_(Object tree, int id) { // TODO: Use of ByRef founded
+    public static void setNodeForId_(Object tree, int id) { 
         Object node = null;
         for (int _i = 0; _i < tree.Nodes.size(); _i++) {
             Node = Tree.Nodes.getItem(_i);
