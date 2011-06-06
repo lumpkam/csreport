@@ -183,6 +183,7 @@ public class mError {
         int p = 0;
         String strErr = "";
         int q = 0;
+        String strOriginalErr2 = "";
 
         p = strOriginalErr.indexOf("@@ERROR_SP:", 1);
 
@@ -203,14 +204,17 @@ public class mError {
         else {
 
             Object errorAdo = null;
-            String strOriginalErr2 = "";
 
-            if (connectionObj != null) {
+            /*
+             * 
+             if (connectionObj != null) {
                 for (int _i = 0; _i < connectionObj.Errors.size(); _i++) {
                     errorAdo = ConnectionObj.Errors.getItem(_i);
                     strOriginalErr2 = strOriginalErr2 + errorAdo;
                 }
             }
+             * 
+             */
 
             strOriginalErr2 = strOriginalErr2 + mGlobal.gErrorDB;
 
@@ -325,7 +329,7 @@ public class mError {
         if (strOriginalErr.indexOf("Cannot insert duplicate key row in object ", 1) > 0) {
             strErr = "No se puede insertar un valor duplicado para el";
 
-            if (strOriginalErr.toLowerCase().indexOf("codigo".toLowerCase(), 1)) {
+            if (strOriginalErr.toLowerCase().indexOf("codigo".toLowerCase(), 1) > 0) {
                 strErr = strErr + " campo código de la tabla";
             } 
             else {
@@ -342,7 +346,7 @@ public class mError {
         if (strOriginalErr.indexOf("No se puede insertar una fila de claves duplicadas en el objeto ", 1) > 0) {
             strErr = "No se puede insertar un valor duplicado para el";
 
-            if (strOriginalErr.toLowerCase().indexOf("codigo".toLowerCase(), 1)) {
+            if (strOriginalErr.toLowerCase().indexOf("codigo".toLowerCase(), 1) > 0) {
                 strErr = strErr + " campo código de la tabla";
             } 
             else {
@@ -386,13 +390,13 @@ public class mError {
         // Para sacar el texto 'changed database...' que aparece
         // cuando hacemos que gDB se reconecte
         //
-        if (strOriginalErr.indexOf("[Microsoft][ODBC SQL Server Driver][SQL Server]Changed database context to ", 1)) {
+        if (strOriginalErr.indexOf("[Microsoft][ODBC SQL Server Driver][SQL Server]Changed database context to ", 1) > 0) {
             strOriginalErr = strOriginalErr.replace("[Microsoft][ODBC SQL Server Driver][SQL Server]Changed database context to ", "");
         }
-        if (strOriginalErr.indexOf("[Microsoft][ODBC SQL Server Driver][SQL Server]Changed language setting to us_english.", 1)) {
+        if (strOriginalErr.indexOf("[Microsoft][ODBC SQL Server Driver][SQL Server]Changed language setting to us_english.", 1) > 0) {
             strOriginalErr = strOriginalErr.replace("[Microsoft][ODBC SQL Server Driver][SQL Server]Changed language setting to us_english.", "");
         }
-        if (strOriginalErr.indexOf("[Microsoft][ODBC SQL Server Driver][SQL Server]", 1)) {
+        if (strOriginalErr.indexOf("[Microsoft][ODBC SQL Server Driver][SQL Server]", 1) > 0) {
             strOriginalErr = strOriginalErr.replace("[Microsoft][ODBC SQL Server Driver][SQL Server]", "");
         }
 
