@@ -1,0 +1,1 @@
+Report authoring tool. It supports dinamyc grouping, scripting formulas in vbscript, images from db and sub-sections. The report definition is saved to file in xml format and can be exported to pdf, doc and xls format.
